@@ -3,6 +3,7 @@
 #include <utility>
 #include <algorithm>
 #include <iostream>
+#include <stdexcept>
 
 //
 // Created by pieromack on 16/05/19.
@@ -40,9 +41,15 @@ void Directory::ls(int indent) const {
 
 std::shared_ptr<Directory> Directory::addDirectory(const std::string &name) {
 
-    if (this->elements.find(name) != this->elements.end()) {
-        /* TODO: Throw Exception */
+    try {
+        if (this->elements.find(name) != this->elements.end()) {
+            throw std::runtime_error(name + std::string(" directory already exists."));
+        }
+    } catch (std::runtime_error &ex) {
+        std::cerr << "[ERROR] " << ex.what() << std::endl;
+        exit(-1);
     }
+
     std::shared_ptr<Directory> newDirectory = std::shared_ptr<Directory>(new Directory(name, this->thisDirectory));
     newDirectory->thisDirectory = newDirectory;
     this->elements.insert(std::pair{name, newDirectory});
@@ -51,9 +58,15 @@ std::shared_ptr<Directory> Directory::addDirectory(const std::string &name) {
 
 std::shared_ptr<File> Directory::addFile(const std::string &name, uintmax_t size) {
 
-    if (this->elements.find(name) != this->elements.end()) {
-        /* TODO: Throw Exception */
+    try {
+        if (this->elements.find(name) != this->elements.end()) {
+            throw std::runtime_error(name + std::string(" file already exists."));
+        }
+    } catch (std::runtime_error &ex) {
+        std::cerr << "[ERROR] " << ex.what() << std::endl;
+        exit(-1);
     }
+
     std::shared_ptr<File> newFile = std::shared_ptr<File>(new File(name, size));
     this->elements.insert(std::pair{name, newFile});
     return newFile;
@@ -101,8 +114,13 @@ std::shared_ptr<File> Directory::getFile(std::string name) {
 }
 
 void Directory::remove(std::string name) {
-    if (name == ".." || name == ".") {
-        //TODO: exception
+    try {
+        if (name == ".." || name == ".") {
+            throw std::runtime_error(std::string("Remove of " + name + " forbidden."));
+        }
+    } catch (std::runtime_error &ex) {
+        std::cerr << "[ERROR] " << ex.what() << std::endl;
+        exit(-1);
     }
 
 
