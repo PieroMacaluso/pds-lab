@@ -7,6 +7,7 @@
 
 
 #include <cstring>
+#include <algorithm>
 
 class StringBuffer {
     int *ptr;
@@ -71,8 +72,17 @@ public:
 
     void set(StringBuffer &sb);
 
+    StringBuffer &operator=(StringBuffer &sb) {
 
-    void realloc(size_t i);
+        swap(*this, sb);
+        return *this;
+    }
+
+    friend void swap(StringBuffer& first, StringBuffer& second){
+        using std::swap;
+        swap(first.ptr, second.ptr);
+        swap(first.buffer, second.buffer);
+    }
 };
 
 
