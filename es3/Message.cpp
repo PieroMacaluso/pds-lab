@@ -4,6 +4,15 @@
 
 #include "Message.h"
 
-std::string Message::getMessage() {
-    return this->message;
+
+int Message::getAction() const {
+    return action;
+}
+
+Symbol Message::getSymbol() const {
+    return s;
+}
+
+int Message::getSiteId() const {
+    return siteId;
 }

@@ -1,4 +1,5 @@
 #include <utility>
+#include <string>
 
 //
 // Created by pieromack on 16/05/19.
@@ -14,14 +15,25 @@
 class Symbol {
 private:
     char c;
-    int id;
+    int idEditor;
+    int idSymbol;
     std::vector<int> pos;
 public:
-    Symbol(char c, int id, std::vector<int> pos) : c(c), id(id), pos(std::move(pos)) {};
+
+    Symbol(char c, int idEditor, int idSymbol, std::vector<int> pos) :
+            c(c), idEditor(idEditor), idSymbol(idSymbol), pos(std::move(pos)) {};
+
+    std::vector<int> getPos();
+
+    int getId();
+
+    int getIdEditor();
+
+    int getIdSymbol();
+
+    const char getChar();
 
     ~Symbol() = default;
-
-
 };
 
 

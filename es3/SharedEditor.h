@@ -7,21 +7,28 @@
 
 #include <string>
 #include "NetworkServer.h"
+#include "Utility.h"
 
 class SharedEditor {
 private:
-    NetworkServer& _server;
+    NetworkServer &_server;
 
     int _siteId;
     std::vector<Symbol> _symbols;
     int _counter;
 public:
 
-    explicit SharedEditor(NetworkServer& server);
+    explicit SharedEditor(NetworkServer &server);
+
     void localInsert(int index, char value);
+
     void localErase(int index);
+
     void process(const Message &m);
+
     std::string to_string();
+
+    int getSiteId();
 
 };
 

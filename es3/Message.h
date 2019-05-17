@@ -13,11 +13,21 @@
 
 class Message {
 private:
-    std::string message;
+    int action;
+    int siteId;
+    Symbol s;
 public:
-    explicit Message(std::string name): message(std::move(name)){};
-    std::string getMessage();
+    enum action {
+        INSERT, ERASE
+    };
 
+    explicit Message(int action, int siteId, const Symbol &s) : action(action), siteId(siteId), s(s) {};
+
+    int getAction() const;
+
+    int getSiteId() const;
+
+    Symbol getSymbol() const;
 };
 
 

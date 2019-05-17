@@ -4,6 +4,8 @@
 
 #include <algorithm>
 #include "NetworkServer.h"
+#include "SharedEditor.h"
+
 
 int NetworkServer::connect(SharedEditor *sharedEditor) {
     this->sharedEditors.push_back(sharedEditor);
@@ -24,6 +26,11 @@ void NetworkServer::send(const Message &m) {
 void NetworkServer::dispatchMessages() {
     while (!this->messageQueue.empty()) {
         Message m = this->messageQueue.front();
+        for (auto &editor:sharedEditors) {
+            if (m.getSiteId() != editor->getSiteId())
+                editor->process(m);
+        }
+        this->messageQueue.pop_front();
 
 
     }
